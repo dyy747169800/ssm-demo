@@ -35,7 +35,13 @@ public class UserController {
 	@RequestMapping("/showUsers")
 	public ModelAndView showUsers(ModelAndView model){
 		model.setViewName("user/user_list");
-		model.addObject(userService.selectUsers());
+		model.addObject("userList",userService.selectUsers());
+		return model;
+	}
+
+	@RequestMapping("/toAddUserPage")
+	public ModelAndView toAddUserPage(ModelAndView model){
+		model.setViewName("user/user_add");
 		return model;
 	}
 
