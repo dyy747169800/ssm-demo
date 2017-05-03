@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selecrUserById(Integer id) {
-        return null;
+    public User selectUserById(Integer id) {
+        return userDao.selectByPrimaryKey(id);
     }
 
 

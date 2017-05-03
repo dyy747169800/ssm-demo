@@ -6,7 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-	<h1>success page!</h1>
-
+	<script>
+		location.href = "/showUsers"
+	</script>
 </body>
 </html>

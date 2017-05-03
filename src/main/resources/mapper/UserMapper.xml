@@ -28,42 +28,42 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-    <insert id="insertSelective" parameterType="com.uban.entity.User" >
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="password != null" >
-        password,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-    </trim>
+  <insert id="insertSelective" parameterType="com.uban.entity.User" >
+      insert into user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+              id,
+            </if>
+            <if test="username != null" >
+              username,
+            </if>
+            <if test="phone != null" >
+              phone,
+            </if>
+            <if test="email != null" >
+              email,
+            </if>
+            <if test="password != null" >
+              password,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+              #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null" >
+              #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+              #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+              #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+              #{password,jdbcType=VARCHAR},
+            </if>
+        </trim>
   </insert>
 
   <update id="updateByPrimaryKeySelective" parameterType="com.uban.entity.User" >

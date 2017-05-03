@@ -11,5 +11,5 @@ public interface UserService {
 
     List<User> selectUsers();
 
-    User selecrUserById(Integer id);
+    User selectUserById(Integer id);
 }

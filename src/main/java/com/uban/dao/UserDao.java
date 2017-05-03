@@ -15,4 +15,5 @@ public interface UserDao {
 
     public List<User> selectAll();
 
+    public User selectByPrimaryKey(@Param("id") Integer id);
 }
