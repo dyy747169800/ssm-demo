@@ -12,4 +12,10 @@ public interface UserService {
     List<User> selectUsers();
 
     User selectUserById(Integer id);
+
+    void editUserById(User user);
+
+    void saveUser(User user);
+
+    void deleteUserById(Integer id);
 }

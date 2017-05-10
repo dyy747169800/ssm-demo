@@ -8,25 +8,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>请登录后操作!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>请登录后操作</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular-1.4.6.min.js"></script>
 </head>
 <body>
-    <h1>请登录后操作!</h1>
-    <form action="/login" id="form">
-        <label>
-            <input type="text" name="username">
-        </label>账号<br>
-        <label>
-            <input type="text" name="password">
-        </label>密码<br>
-        <input type="button" value="登录"><br>
-    </form>
+    <div class="container">
+        <div style="height: 30%"></div>
+        <form class="form-horizontal" role="form" id="form">
+            <div class="form-group">
+                <div class="text-center"><h3>请登录后访问</h3></div>
+                <div class="col-sm-3"></div>
+                <label for="username" class="col-sm-2 control-label">账号</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="username" placeholder="请输入账号" name="username">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3"></div>
+                <label for="password" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="password" placeholder="请输入密码" name="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-offset-2 col-sm-3 text-right">
+                    <button type="button" class="btn btn-default ">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 <script>
     var callBackUrl = "${requestUrl}";
     $(function () {
-        $("input[type=button]").click(function () {
+        $("button[type=button]").click(function () {
             $.ajax({
                 url:"/userLogin",
                 method:"post",

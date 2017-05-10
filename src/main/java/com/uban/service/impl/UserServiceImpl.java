@@ -27,5 +27,20 @@ public class UserServiceImpl implements UserService {
         return userDao.selectByPrimaryKey(id);
     }
 
+    @Override
+    public void editUserById(User user) {
+        userDao.editUserById(user);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userDao.saveUser(user);
+    }
+
+    @Override
+    public void deleteUserById(Integer id) {
+        userDao.deleteUserById(id);
+    }
+
 
 }

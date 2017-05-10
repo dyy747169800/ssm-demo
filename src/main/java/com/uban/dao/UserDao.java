@@ -13,7 +13,13 @@ import java.util.List;
 @Repository
 public interface UserDao {
 
-    public List<User> selectAll();
+    List<User> selectAll();
 
-    public User selectByPrimaryKey(@Param("id") Integer id);
+    User selectByPrimaryKey(@Param("id") Integer id);
+
+    void editUserById(User user);
+
+    void saveUser(User user);
+
+    void deleteUserById(Integer id);
 }

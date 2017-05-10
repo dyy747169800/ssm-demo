@@ -7,9 +7,10 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, phone, email, password
+    id, username, phone, email, password,create_date
   </sql>
   <select id="selectAll" resultMap="BaseResultMap">
       select
@@ -23,12 +24,12 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteUserById" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insertSelective" parameterType="com.uban.entity.User" >
+  <insert id="saveUser" parameterType="com.uban.entity.User" >
       insert into user
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -45,6 +46,9 @@
             </if>
             <if test="password != null" >
               password,
+            </if>
+            <if test="createDate != null" >
+                create_date
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -63,10 +67,13 @@
             <if test="password != null" >
               #{password,jdbcType=VARCHAR},
             </if>
+            <if test="createDate != null" >
+              #{createDate,jdbcType=VARCHAR}
+            </if>
         </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.uban.entity.User" >
+  <update id="editUserById" parameterType="com.uban.entity.User" >
     update user
     <set >
       <if test="username != null" >
@@ -80,6 +87,9 @@
       </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+          create_date = #{createDate,jdbcType=VARCHAR}
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

@@ -7,14 +7,11 @@ import com.uban.utils.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -23,8 +20,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private HttpServletRequest request;
 
 	@ResponseBody
 	@RequestMapping("/show")
@@ -34,7 +29,7 @@ public class UserController {
 
 	@RequestMapping("/showUsers")
 	public ModelAndView showUsers(ModelAndView model){
-		model.setViewName("user/user_list");
+		model.setViewName("user/user_list_angular");
 		model.addObject("userList",userService.selectUsers());
 		return model;
 	}
@@ -69,4 +64,30 @@ public class UserController {
 		}
 
 	}
+
+    @ResponseBody
+    @RequestMapping(value = "/addOrEditUser",method = RequestMethod.POST)
+	public String addOrEditUser(@RequestBody User user){
+       if(user != null){
+           if(user.getId() != null){
+               //edit
+               user.setCreateDate(new Date().getTime());
+               userService.editUserById(user);
+           }else {
+               //add
+               user.setCreateDate(new Date().getTime());
+               userService.saveUser(user);
+           }
+       }
+       return "{\"status\":\"success\"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteUser",method = RequestMethod.POST)
+    public String deleteUser(@RequestBody User user){
+     if(null != user && user.getId() != null){
+         userService.deleteUserById(user.getId());
+     }
+        return "{\"status\":\"success\"}";
+    }
 }
