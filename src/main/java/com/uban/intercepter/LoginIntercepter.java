@@ -1,8 +1,12 @@
 package com.uban.intercepter;
 
+import com.alibaba.fastjson.JSON;
 import com.uban.common.CommonInterface;
+import com.uban.entity.User;
+import com.uban.redis.RedisCacheClient;
 import com.uban.utils.CookieUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -15,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginIntercepter extends HandlerInterceptorAdapter {
     private Logger log = Logger.getLogger(this.getClass());
+    @Autowired
+    private RedisCacheClient redisCacheClient;
+
      /**
      * 在业务处理器处理请求之前被调用
      * 如果返回false
@@ -29,8 +36,17 @@ public class LoginIntercepter extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("====================执行顺序 1.preHandle ===============");
-        Cookie cookie = CookieUtil.getCookie(request,CommonInterface.LOGIN_COOKIE_NAME);
+        Cookie cookie = CookieUtil.getCookie(request,CommonInterface.LOGIN_TOKEN);
         if(cookie != null){
+            String user = redisCacheClient.get(cookie.getValue());
+            if(user != null){
+                CookieUtil.setCookie(CommonInterface.LOGIN_USER_NAME, JSON.parseObject(user, User.class).getUsername(),2,response);
+                redisCacheClient.setExpire(cookie.getValue(),600l);
+            }else {
+                request.setAttribute("requestUrl",request.getRequestURI());
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request,response);
+                return false;
+            }
             return super.preHandle(request, response, handler);
         }else {
              request.setAttribute("requestUrl",request.getRequestURI());

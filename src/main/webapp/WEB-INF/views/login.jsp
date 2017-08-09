@@ -17,8 +17,7 @@
     <script src="/js/angular-1.4.6.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div style="height: 30%"></div>
+    <div class="container" style="padding-top: 18%">
         <form class="form-horizontal" role="form" id="form">
             <div class="form-group">
                 <div class="text-center"><h3>请登录后访问</h3></div>
@@ -38,7 +37,7 @@
             <div class="form-group">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-offset-2 col-sm-3 text-right">
-                    <button type="button" class="btn btn-default ">登录</button>
+                    <button type="button" class="btn btn-default" id="login-btn">登录</button>
                 </div>
             </div>
         </form>
@@ -61,6 +60,19 @@
                     }
                 }
             })
+        })
+    })
+    $(function(){
+        $(document).on('keydown',function(e){
+            switch (e.which){
+                case 13:$("#login-btn").click();
+            }
+
+        })
+
+        $(document).on('keydown',function(e){
+//           按下不同的键e.which会有不同的值
+            console.log(e.which)
         })
     })
 </script>

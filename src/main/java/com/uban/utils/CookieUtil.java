@@ -28,7 +28,7 @@ public class CookieUtil {
 	 */
 	public static void setCookie(String cookieName,String cookieValue, int hour, HttpServletResponse response){
 		Cookie cookie = new Cookie(cookieName, cookieValue);
-		cookie.setDomain("localhost");
+		cookie.setDomain("dyy.com");
 		cookie.setPath("/");
 		cookie.setMaxAge(hour*3600);//设置cookie的有效时间
 		response.addCookie(cookie);

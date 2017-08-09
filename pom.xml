@@ -22,6 +22,12 @@
                 <maven.compiler.source>1.7</maven.compiler.source>
                 <maven.compiler.target>1.7</maven.compiler.target>
                 <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+				<redis.maxIdle>3</redis.maxIdle>
+				<redis.maxWait>1000</redis.maxWait>
+				<redis.testOnBorrow>true</redis.testOnBorrow>
+				<redis.host>192.168.26.128</redis.host>
+				<redis.port>6379</redis.port>
+				<redis.pass>root</redis.pass>
             </properties>
         </profile>
 	</profiles>
@@ -151,12 +157,43 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.6.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<!--redis-->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.6.2.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-
-		<plugins>
-
-		</plugins>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources/</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 </project>

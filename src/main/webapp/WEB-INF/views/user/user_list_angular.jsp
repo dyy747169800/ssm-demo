@@ -11,12 +11,15 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/angular-1.4.6.min.js"></script>
 </head>
-<body class="container" ng-controller="myCtrl">
-<div >
-    <h1 class="text-center">用户列表</h1>
-    <div class="checkbox text-right">
-        <label>
-            <input type="checkbox" ng-model="realTime"> 实时更新数据
+<body ng-controller="myCtrl">
+<nav class="navbar navbar-inverse">
+   <a class="navbar-brand hidden-sm active">Hello,{{ loginName }}</a>
+</nav>
+<div class="container">
+    <div class="alert alert-info">
+        <h3 style="display:inline" >用户列表</h3>
+        <label style="float: right;cursor: pointer;margin-top: 3px">
+            <input style="vertical-align: text-bottom; cursor: pointer;margin: 0px 3px 1px 0px;" type="checkbox" ng-model="realTime">实时更新数据
         </label>
     </div>
     <table class="table table-striped table-bordered table-hover table-condensed">
@@ -38,8 +41,10 @@
                 <td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
                 <td>{{user.createDate | date:"yyyy-MM-dd HH:mm:ss" }}</td>
                 <td class="text-center">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser-modal" ng-click="edit(this)">编辑</button>
-                    <button type="button" class="btn btn-danger" ng-click="delete(this)">删除</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser-modal" ng-click="edit(this)">编辑</button>
+                        <button type="button" class="btn btn-danger" ng-click="delete(this)">删除</button>
+                    </div>
                 </td>
             </tr>
         </tbody>
@@ -117,6 +122,7 @@
     var app = angular.module('myApp', []);
 
     app.controller('myCtrl', function($scope,$http,$interval) {
+        $scope.loginName = getCookie('loginUserName');;
         renderView($http,$scope)
         $scope.openModal = function(){
             $scope.editOrAdd = "新增";
@@ -183,6 +189,15 @@
         $http.get("/getUsers").then(function (response) {
             $scope.userList = response.data;
         });
+    }
+
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
     }
 </script>
 </html>

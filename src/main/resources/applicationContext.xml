@@ -17,7 +17,7 @@
    </context:component-scan>
 
 	<context:annotation-config/>
-
+	<context:property-placeholder location="classpath*:prop/*.properties" />
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
 	<tx:annotation-driven transaction-manager="transactionManager"	proxy-target-class="true" />
@@ -43,4 +43,8 @@
 		<property name="basePackage" value="com.uban"/>
 		<property name="annotationClass" value="org.springframework.stereotype.Repository"/>
 	</bean>
+
+
+	<import resource="redis.xml"/>
+
 </beans>

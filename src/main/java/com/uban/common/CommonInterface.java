@@ -8,5 +8,7 @@ public class CommonInterface {
     /**
      * 登录cookiename
      */
-    public final static String LOGIN_COOKIE_NAME = "loginCookieName";
+    public final static String LOGIN_TOKEN = "loginToken";
+    public final static String LOGIN_USER_NAME = "loginUserName";
+
 }

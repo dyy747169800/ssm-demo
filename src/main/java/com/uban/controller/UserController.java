@@ -1,9 +1,12 @@
 package com.uban.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.uban.common.CommonInterface;
 import com.uban.entity.User;
+import com.uban.redis.RedisCacheClient;
 import com.uban.service.UserService;
 import com.uban.utils.CookieUtil;
+import com.uban.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -20,6 +23,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RedisCacheClient redisCacheClient;
 
 	@ResponseBody
 	@RequestMapping("/show")
@@ -57,7 +63,10 @@ public class UserController {
 	@RequestMapping(value = "/userLogin",method = RequestMethod.POST)
 	public User userLogin(User user,HttpServletResponse response){
 		if(!StringUtils.isEmpty(user.getPassword()) && !StringUtils.isEmpty(user.getUsername())){
-			CookieUtil.setCookie(CommonInterface.LOGIN_COOKIE_NAME,user.getUsername(),1,response);
+			String token = MD5Utils.encodeByMD5(user.getUsername());
+			redisCacheClient.set(token, JSON.toJSONString(user));
+			redisCacheClient.setExpire(token,600l);
+			CookieUtil.setCookie(CommonInterface.LOGIN_TOKEN,token,1,response);
 			return user;
 		}else {
 			return null;
@@ -90,4 +99,9 @@ public class UserController {
      }
         return "{\"status\":\"success\"}";
     }
+
+	@RequestMapping(value = "/pic")
+	public String pic(){
+		return "pic";
+	}
 }
